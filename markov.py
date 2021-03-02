@@ -2,7 +2,6 @@
 
 from random import choice
 
-input_file = open('green-eggs.txt')
 
 def open_and_read_file(file_path):
     """Take file path as string; return text as string.
@@ -11,9 +10,14 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    # your code goes here
-
-    return 'Contents of your file as one long string'
+    sentence = ""
+    input_file = open(file_path)
+    for line in input_file:
+        line = line.rstrip().split(" ")
+        for word in line:
+            sentence += word + " "
+    
+    return sentence
 
 
 def make_chains(text_string):
@@ -40,12 +44,37 @@ def make_chains(text_string):
         >>> chains[('there','juanita')]
         [None]
     """
+    text_list = text_string.split(" ")
+    chains = []
+    
+    for i in range(len(text_list)-2):
+        chains_list = [text_list[i], text_list[i+1]]
+        chains.append(chains_list)
+    
+    chains_tuples = []
+    for chain in chains:
+        chain = tuple(chain)
+        chains_tuples.append(chain)
 
-    chains = {}
+    dictionary = {}
+    for tup in chains_tuples:
+        phrase = ""
+        phrase += tup[0] + " " + tup[1]
+        for j in range(len(text_list)-3):
+            for_same_tuple = []
+            if text_list[j] == str(tup[0]) and text_list[j+1] == str(tup[1]):
+                next_word = text_list[j+2]
+                for_same_tuple.append(next_word)
 
-    # your code goes here
+                dictionary[tup] = for_same_tuple
+    print(dictionary.items())
 
-    return chains
+
+    # return chains_tuples
+
+
+sentence = open_and_read_file("green-eggs.txt")
+make_chains(sentence)
 
 
 def make_text(chains):
