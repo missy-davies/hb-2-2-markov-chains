@@ -45,47 +45,28 @@ def make_chains(text_string):
         [None]
     """
     text_list = text_string.split(" ")
+
     chains = []
     
-    for i in range(len(text_list)-2):
+    for i in range(len(text_list)-3):
         chains_list = [text_list[i], text_list[i+1]]
         chains.append(chains_list)
     
-    chains_tuples = []
+    
+    """Create a dictionary with our tuples as the keys and initialize all 
+    values as empty lists"""
+    chains_tuples = {}
+    
     for chain in chains:
-        chain = tuple(chain)
-        chains_tuples.append(chain)
-
-    dictionary = {}
-    for tup in chains_tuples:
-        phrase = ""
-        phrase += tup[0] + " " + tup[1]
-        for j in range(len(text_list)-3):
-            #for_same_tuple = []
-            #for k in range(len(text_list)-3):
-            if text_list[j] == str(tup[0]) and text_list[j+1] == str(tup[1]):
-                next_word = text_list[j+2]
-
-                if tup in dictionary:
-                    dictionary[tup].append(next_word)
-                else:
-                    dictionary[tup] = [next_word]
-                
-                # if next_word not in dictionary.keys()?   
-                    #for_same_tuple.append(next_word)
-
-                #if there isn't a list? create one
-                # dictionary[tup] = next_word
-                #if there is? Get the list add the word
-
-    print(dictionary.items())
-
-
-    # return chains_tuples
-
-
-sentence = open_and_read_file("green-eggs.txt")
-make_chains(sentence)
+        first, second = chain
+        chains_tuples[(first, second)] = [] 
+    
+    for chain in chains_tuples.keys():
+        for j in range(len(text_list)):
+            if chain[0] == text_list[j] and chain[1] == text_list[j+1]:
+                chains_tuples[chain].append(text_list[j+2])
+    print(chains_tuples)
+    return chains_tuples
 
 
 def make_text(chains):
@@ -109,4 +90,4 @@ chains = make_chains(input_text)
 # Produce random text
 random_text = make_text(chains)
 
-print(random_text)
+# print(random_text)
