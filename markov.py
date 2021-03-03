@@ -61,12 +61,23 @@ def make_chains(text_string):
         phrase = ""
         phrase += tup[0] + " " + tup[1]
         for j in range(len(text_list)-3):
-            for_same_tuple = []
+            #for_same_tuple = []
+            #for k in range(len(text_list)-3):
             if text_list[j] == str(tup[0]) and text_list[j+1] == str(tup[1]):
                 next_word = text_list[j+2]
-                for_same_tuple.append(next_word)
 
-                dictionary[tup] = for_same_tuple
+                if tup in dictionary:
+                    dictionary[tup].append(next_word)
+                else:
+                    dictionary[tup] = [next_word]
+                
+                # if next_word not in dictionary.keys()?   
+                    #for_same_tuple.append(next_word)
+
+                #if there isn't a list? create one
+                # dictionary[tup] = next_word
+                #if there is? Get the list add the word
+
     print(dictionary.items())
 
 
