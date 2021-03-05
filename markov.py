@@ -11,6 +11,7 @@ def open_and_read_file(file_path):
     """
 
     sentence = ""
+    
     input_file = open(file_path)
     for line in input_file:
         line = line.rstrip().split(" ")
@@ -65,16 +66,21 @@ def make_chains(text_string):
         for j in range(len(text_list)):
             if chain[0] == text_list[j] and chain[1] == text_list[j+1]:
                 chains_tuples[chain].append(text_list[j+2])
-    print(chains_tuples)
+   
     return chains_tuples
 
 
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
+    keys = list(chains.keys())
+    key = choice(keys)
 
-    # your code goes here
+    words = [key[0], key[1]]
+    while key in chains:
+        word = choice(chains[key])
+        words.append(word)
+        key = (key[1], word)
 
     return ' '.join(words)
 
@@ -90,4 +96,4 @@ chains = make_chains(input_text)
 # Produce random text
 random_text = make_text(chains)
 
-# print(random_text)
+print(random_text)
